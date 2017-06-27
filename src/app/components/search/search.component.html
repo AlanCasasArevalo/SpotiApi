@@ -1,1 +1,25 @@
-<h1>Search funcionando</h1>
+<div class="container top-30">
+
+  <div class="row">
+    
+    <div class="col-md-3">
+      <label for="termino">Buscador de artistas</label>
+
+      <input [(ngModel)]="termino"
+      (keyup)="buscarArtista()"
+      class="form-control"
+      type="text" name="termino" placeholder="Buscar un artista">
+
+    </div>
+
+    <div class="col-md-9">
+      <ul>
+        <li *ngFor="let artista of _spotifyService.artistas">
+          {{ artista.name }}
+        </li>
+      </ul>
+    </div>
+
+  </div>
+
+</div>
