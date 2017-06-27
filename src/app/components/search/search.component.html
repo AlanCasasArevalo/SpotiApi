@@ -13,11 +13,19 @@
     </div>
 
     <div class="col-md-9">
-      <ul>
+      <!--<ul>
         <li *ngFor="let artista of _spotifyService.artistas">
           {{ artista.name }}
         </li>
-      </ul>
+      </ul>-->
+      <div class="row">
+        <div class="col-md-3 text-center" *ngFor="let artista of _spotifyService.artistas">
+          <img [src]="artista.images | sinfoto" class="img-fluid img-thumbnail">
+          <p>
+            {{ artista.name }}
+          </p>
+        </div>
+      </div>
     </div>
 
   </div>
