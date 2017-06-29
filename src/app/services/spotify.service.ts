@@ -6,15 +6,18 @@ import 'rxjs/add/operator/map'
 export class SpotifyService {
 
   artistas:any[] = []
+  token:string = 'Bearer BQDXdSaFI2gxip7L3rJAOk3vXm9QW5fB2R-bdzZ0axMFXRQqzgJ9dIatfrPj2nZLCDvfSoKv8EvSRdaZMM436Q'
 
   urlBusqueda:string = "https://api.spotify.com/v1/search"
+  urlArtista:string = "https://api.spotify.com/v1/artists"
+  urlCancion:string = "https://api.spotify.com/v1/artists"
 
   constructor(private _http:Http) { }
 
   getArtistas( termino:string ){
     let headers = new Headers()
-    headers.append('authorization', 'Bearer BQDWKRecs7OVZ3QreFiSi0TdQ-jYeRXu9_PZRElsybpZfAK3AY-rp0L9t7tdV2X8NVXks5IrPLvPBzqsv8S1LQ')
 
+    headers.append('authorization', this.token)
     let query = `?q=${ termino }&type=artist`
     let url = this.urlBusqueda + query
 
@@ -24,6 +27,37 @@ export class SpotifyService {
                   this.artistas = res.json().artists.items
                   // console.log(this.artistas)
                   return res.json().artists.items
+               })
+  }
+  
+  getArtista( id:string ){
+    let headers = new Headers()
+    headers.append('authorization', this.token)
+
+    let query = `/${ id }`
+    let url = this.urlArtista + query
+
+    return this._http.get(url, { headers })
+               .map( res => {
+                  // console.log( res.json() )
+                  // this.artistas = res.json().artists.items
+                  // // console.log(this.artistas)
+                  return res.json()
+               })
+  }
+
+  getCancion( id:string ){
+    let headers = new Headers()
+
+    headers.append('authorization',this.token )
+
+    let query = `/${ id }/top-tracks?country=ES`
+    let url = this.urlCancion + query 
+
+    return this._http.get(url, { headers })
+               .map( res => {
+                  console.log( res.json().tracks )
+                  return res.json().tracks
                })
   }
 
